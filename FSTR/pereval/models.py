@@ -3,10 +3,10 @@ from django.db import models
 
 class User(models.Model):
     email = models.EmailField(unique=True)
-    fam = models.CharField(max_length=20)
-    name = models.CharField(max_length=20)
-    otc = models.CharField(max_length=20)
-    phone = models.CharField()
+    fam = models.CharField(max_length=50)
+    name = models.CharField(max_length=50)
+    otc = models.CharField(max_length=50)
+    phone = models.CharField(max_length=50)
 
 
 class Coords(models.Model):
@@ -34,8 +34,8 @@ class Level(models.Model):
 
 class Pereval(models.Model):
     title = models.CharField(max_length=50)
-    other_title = models.CharField()
-    connect = models.CharField()
+    other_title = models.CharField(max_length=50)
+    connect = models.CharField(max_length=50)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     add_time = models.DateTimeField(auto_now_add=True)
     coords = models.ForeignKey(Coords, on_delete=models.CASCADE)
@@ -44,5 +44,5 @@ class Pereval(models.Model):
 
 class Images(models.Model):
     data = models.URLField()
-    title = models.CharField()
+    title = models.CharField(max_length=50)
     pereval = models.ForeignKey(Pereval, on_delete=models.CASCADE)
