@@ -40,6 +40,7 @@ class Pereval(models.Model):
     add_time = models.DateTimeField(auto_now_add=True)
     coords = models.ForeignKey(Coords, on_delete=models.CASCADE)
     status = models.BooleanField(default=False)
+    level = models.ForeignKey(Level, on_delete=models.CASCADE)
 
 
 class Images(models.Model):
