@@ -16,30 +16,32 @@ class Coords(models.Model):
 
 
 class Level(models.Model):
-    easy = 'easy'
-    average = 'aver'
-    hard = 'hard'
 
-    the_difficulty = [
-        (easy, "Легкая сложность"),
-        (average, "Средняя сложность"),
-        (hard, "Тяжелая сложность"),
-    ]
-
-    winter = models.CharField(max_length=4, choices=the_difficulty, default=average)
-    summer = models.CharField(max_length=4, choices=the_difficulty, default=average)
-    autumn = models.CharField(max_length=4, choices=the_difficulty, default=average)
-    spring = models.CharField(max_length=4, choices=the_difficulty, default=average)
+    winter = models.CharField(max_length=20, verbose_name='Зима', blank=True, null=True)
+    summer = models.CharField(max_length=20, verbose_name='Лето', blank=True, null=True)
+    autumn = models.CharField(max_length=20, verbose_name='Осень', blank=True, null=True)
+    spring = models.CharField(max_length=20, verbose_name='Весна', blank=True, null=True)
 
 
 class Pereval(models.Model):
+    new = "new"
+    pending = "pending"
+    accepted = "accepted"
+    rejected = "rejected"
+    STATUS = [
+        (new, "новый"),
+        (pending, "модератор взял в работу"),
+        (accepted, "модерация прошла успешно"),
+        (rejected, "модерация прошла, информация не принята"),
+    ]
+
     title = models.CharField(max_length=50)
     other_title = models.CharField(max_length=50)
     connect = models.CharField(max_length=50)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     add_time = models.DateTimeField(auto_now_add=True)
     coords = models.ForeignKey(Coords, on_delete=models.CASCADE)
-    status = models.BooleanField(default=False)
+    status = models.CharField(max_length=10, choices=STATUS, default=new)
     level = models.ForeignKey(Level, on_delete=models.CASCADE)
 
 
