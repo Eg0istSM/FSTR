@@ -29,15 +29,18 @@ class UserSerializer(serializers.ModelSerializer):
 class PerevalSerializer(serializers.ModelSerializer):
     user = UserSerializer()
     coords = CoordsSerializer()
+    level = LevelSerializer()
 
     class Meta:
         model = Pereval
-        fields = ('title', 'other_title', 'connect', 'add_time', 'user', 'coords',)
+        fields = ('title', 'other_title', 'connect', 'add_time', 'user', 'coords', 'level',)
 
     def create(self, validated_data):
         user_data = validated_data.pop('user')
         user_instance = User.objects.create(**user_data)
         coords_data = validated_data.pop('coords')
         coords_instance = Coords.objects.create(**coords_data)
-        pereval_instance = Pereval.objects.create(user=user_instance,coords=coords_instance, **validated_data)
+        level_data = validated_data.pop('level')
+        level_instance = Level.objects.create(**level_data)
+        pereval_instance = Pereval.objects.create(user=user_instance, coords=coords_instance,level=level_instance, **validated_data)
         return pereval_instance
