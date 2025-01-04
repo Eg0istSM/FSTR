@@ -48,4 +48,4 @@ class Pereval(models.Model):
 class Images(models.Model):
     data = models.URLField()
     title = models.CharField(max_length=50)
-    pereval = models.ForeignKey(Pereval, on_delete=models.CASCADE)
+    pereval = models.ForeignKey(Pereval, on_delete=models.CASCADE, related_name='images')

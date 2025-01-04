@@ -23,18 +23,18 @@ class ImagesSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('email', 'fam', 'name', 'otc', 'phone',)
+        fields = ('id', 'email', 'fam', 'name', 'otc', 'phone',)
 
 
 class PerevalSerializer(serializers.ModelSerializer):
     user = UserSerializer()
     coords = CoordsSerializer()
     level = LevelSerializer()
-    images = ImagesSerializer()
+    images = ImagesSerializer(many=True)
 
     class Meta:
         model = Pereval
-        fields = ('title', 'other_title', 'connect', 'add_time', 'user', 'coords', 'level', 'images',)
+        fields = ('title', 'other_title', 'connect', 'add_time', 'user', 'coords', 'level', 'images', 'status',)
 
     def create(self, validated_data):
         user_data = validated_data.pop('user')
@@ -44,7 +44,11 @@ class PerevalSerializer(serializers.ModelSerializer):
         level_data = validated_data.pop('level')
         level_instance = Level.objects.create(**level_data)
         images_data = validated_data.pop('images')
-        images_instance = Images.objects.create(**images_data)
         pereval_instance = Pereval.objects.create(user=user_instance, coords=coords_instance, level=level_instance,
-                                                  images=images_instance, **validated_data)
+                                                  **validated_data, )
+        for img in images_data:
+            data = img.pop('data')
+            title = img.pop('title')
+            Images.objects.create(pereval=pereval_instance, title=title, data=data)
+
         return pereval_instance
