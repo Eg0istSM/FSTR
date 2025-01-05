@@ -28,7 +28,7 @@ class PerevalViewSet(viewsets.ModelViewSet):
     queryset = Pereval.objects.all()
     serializer_class = PerevalSerializer
 
-    def create(selfself, request, *args, **kwargs):
+    def create(self, request, *args, **kwargs):
         serializer = PerevalSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -50,7 +50,7 @@ class PerevalViewSet(viewsets.ModelViewSet):
                 'id': None,
             })
 
-    def update(self, request, *args, **kwargs):
+    def partial_update(self, request, *args, **kwargs):
         pereval = self.get_object()
         if pereval.status == 'new':
             serializer = PerevalSerializer(pereval, data=request.data, partial=True)

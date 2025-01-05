@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import *
+from drf_writable_nested import WritableNestedModelSerializer
 
 
 class CoordsSerializer(serializers.ModelSerializer):
@@ -26,7 +27,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('id', 'email', 'fam', 'name', 'otc', 'phone',)
 
 
-class PerevalSerializer(serializers.ModelSerializer):
+class PerevalSerializer(WritableNestedModelSerializer):
     user = UserSerializer()
     coords = CoordsSerializer()
     level = LevelSerializer()
@@ -69,4 +70,23 @@ class PerevalSerializer(serializers.ModelSerializer):
             if data_user is not None and any(validating_user_fields):
                 raise serializers.ValidationError({'Отклонено': 'Нельзя изменять данные пользователя'})
         return data
+
+    def update(self, instance, validated_data):
+        user = validated_data.pop('user')
+        coords = validated_data.pop('coords')
+        level = validated_data.pop('level')
+        images = validated_data.pop('images')
+
+        User.objects.update(**user)
+        Coords.objects.update(**coords)
+        Level.objects.update(**level)
+
+        for image in images:
+            data = image.pop('data')
+            title = image.pop('title')
+            Images.objects.update(data=data, title=title)
+
+        return super().update(instance, validated_data)
+
+
 
