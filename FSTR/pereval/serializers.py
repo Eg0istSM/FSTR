@@ -70,4 +70,3 @@ class PerevalSerializer(serializers.ModelSerializer):
                 raise serializers.ValidationError({'Отклонено': 'Нельзя изменять данные пользователя'})
         return data
 
-
