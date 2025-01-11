@@ -71,6 +71,3 @@ class PerevalViewSet(viewsets.ModelViewSet):
                 'state': '0',
                 'message': f'Отклонено! Причина: {pereval.get_status_display()}'
             })
-
-
-

@@ -16,7 +16,6 @@ class Coords(models.Model):
 
 
 class Level(models.Model):
-
     winter = models.CharField(max_length=20, verbose_name='Зима', blank=True, null=True)
     summer = models.CharField(max_length=20, verbose_name='Лето', blank=True, null=True)
     autumn = models.CharField(max_length=20, verbose_name='Осень', blank=True, null=True)

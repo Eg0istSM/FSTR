@@ -81,5 +81,3 @@ class PerevalSerializer(WritableNestedModelSerializer):
             if data_user is not None and any(validating_user_fields):
                 raise serializers.ValidationError({'Отклонено': 'Нельзя изменять данные пользователя'})
         return data
-
-
