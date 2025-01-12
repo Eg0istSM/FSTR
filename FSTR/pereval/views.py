@@ -59,7 +59,7 @@ class PerevalViewSet(viewsets.ModelViewSet):
                 serializer.save()
                 return Response({
                     'state': '1',
-                    'message': 'Запись успешно изменена',
+                    'message': f'Запись {pereval.id} успешно изменена',
                 })
             else:
                 return Response({

@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from pereval import views
-from django.views.generic import TemplateView
+
 
 router = routers.DefaultRouter()
 # router.register(r'user', views.UserViewSet, basename='user')

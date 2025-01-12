@@ -34,6 +34,7 @@ class Pereval(models.Model):
         (rejected, "модерация прошла, информация не принята"),
     ]
 
+    beauty_title = models.CharField(max_length=50, default='пер.')
     title = models.CharField(max_length=50)
     other_title = models.CharField(max_length=50)
     connect = models.CharField(max_length=50)
