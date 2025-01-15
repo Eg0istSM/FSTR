@@ -30,12 +30,12 @@ class PerevalViewSet(viewsets.ModelViewSet):
     filterset_fields = ('user__email',)
 
     def create(self, request, *args, **kwargs):
-        serializer = PerevalSerializer(data=request.data)
+        serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response({
                 'status': status.HTTP_200_OK,
-                'message': None,
+                'message': 'Перевал успешно создан!',
                 'id': serializer.data['id'],
             })
         if status.HTTP_400_BAD_REQUEST:
@@ -54,7 +54,7 @@ class PerevalViewSet(viewsets.ModelViewSet):
     def partial_update(self, request, *args, **kwargs):
         pereval = self.get_object()
         if pereval.status == 'new':
-            serializer = PerevalSerializer(pereval, data=request.data, partial=True)
+            serializer = self.get_serializer(pereval, data=request.data, partial=True)
             if serializer.is_valid():
                 serializer.save()
                 return Response({
