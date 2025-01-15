@@ -37,6 +37,7 @@ class PerevalSerializer(WritableNestedModelSerializer):
         model = Pereval
         fields = ('id',
                   'url',
+                  'beauty_title',
                   'title',
                   'other_title',
                   'connect',
@@ -50,7 +51,7 @@ class PerevalSerializer(WritableNestedModelSerializer):
     # для класса WritableNestedModelSerializer не нужно писать метод (этот как пример)
     def create(self, validated_data):
         user_data = validated_data.pop('user')
-        user_instance = User.objects.create(**user_data)
+        user_instance, created = User.objects.get_or_create(**user_data)
         coords_data = validated_data.pop('coords')
         coords_instance = Coords.objects.create(**coords_data)
         level_data = validated_data.pop('level')

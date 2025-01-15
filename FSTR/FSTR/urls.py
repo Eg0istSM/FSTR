@@ -5,11 +5,11 @@ from pereval import views
 
 
 router = routers.DefaultRouter()
-# router.register(r'user', views.UserViewSet, basename='user')
-# router.register(r'coords', views.CoordsViewSet, basename='coords')
-# router.register(r'level', views.LevelViewSet, basename='level')
+router.register(r'user', views.UserViewSet, basename='user')
+router.register(r'coords', views.CoordsViewSet, basename='coords')
+router.register(r'level', views.LevelViewSet, basename='level')
 router.register(r'pereval', views.PerevalViewSet, basename='pereval')
-# router.register(r'images', views.ImagesViewSet, basename='images')
+router.register(r'images', views.ImagesViewSet, basename='images')
 
 
 urlpatterns = [
